@@ -1,0 +1,28 @@
+# Unity temporary files
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+
+# Temporary captures
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+
+# Rider and Visual Studio
+.idea/
+.vs/
+*.csproj
+*.sln
+*.slnx
+*.user
+*.userprefs
+*.DotSettings.user
+
+# Other generated files
+*.log
+*.tmp
+*.pdb
+*.mdb
