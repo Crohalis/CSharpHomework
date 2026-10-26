@@ -1,6 +1,6 @@
-using UnityEngine;
-
-public class ElementType
+public enum ElementType
 {
-    
+    None,
+    Fire,
+    Ice
 }
