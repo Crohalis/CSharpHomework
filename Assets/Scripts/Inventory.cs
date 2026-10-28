@@ -3,6 +3,15 @@ using UnityEngine;
 public class Inventory
 {
     private Dictionary<string, int> items = new Dictionary<string, int>();
+    public int GetItemCount(string item)
+    {
+        if (items.ContainsKey(item))
+        {
+            return items[item];
+        }
+
+        return 0;
+    }
 
     public void AddItem(string item, int count = 1)
     {
