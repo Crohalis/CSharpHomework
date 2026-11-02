@@ -15,7 +15,7 @@ public class Arena : MonoBehaviour
     private Unit m_hero;
     private Unit m_enemy;
 
-    void Awake()
+    private void Awake()
     {
         if (heroClass == HeroClass.Warrior)
         {
@@ -38,13 +38,13 @@ public class Arena : MonoBehaviour
                 m_enemy = new Unit("Orc", 80, 5, 10);
                 break;
 
-            case 2:
+            default:
                 m_enemy = new Unit("Troll", 140, 8, 12);
                 break;
         }
     }
 
-    IEnumerator Start()
+    private IEnumerator Start()
     {
         heroText.text = m_enemy.name + "\nHP: " + m_enemy.health;
         enemyText.text = m_enemy.name + "\nHP: " + m_enemy.health;
