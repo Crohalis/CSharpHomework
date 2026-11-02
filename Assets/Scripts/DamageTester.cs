@@ -54,7 +54,7 @@ public class DamageTester : MonoBehaviour
             yield return StartCoroutine(ShowHit(finalDamage, isCritical));
         }
     }
-    IEnumerator ShowHit(int damage, bool isCritical)
+    private IEnumerator ShowHit(int damage, bool isCritical)
     {
             Vector3 attackerStartPosition = attacker.position;
             Vector3 targetStartScale = target.localScale;

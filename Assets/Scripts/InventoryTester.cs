@@ -36,7 +36,7 @@ public class InventoryTester : MonoBehaviour
         inventory.Print();
         
     }
-    void UpdateTexts(Inventory inventory)
+    private void UpdateTexts(Inventory inventory)
     {
         int potionCount = inventory.GetItemCount("Potion");
         int swordCount = inventory.GetItemCount("Sword");

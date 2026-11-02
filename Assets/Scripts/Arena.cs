@@ -12,18 +12,18 @@ public class Arena : MonoBehaviour
     public TMP_Text resultText;
     public HeroClass heroClass;
     public int maxRounds = 10;
-    private Unit hero;
-    private Unit enemy;
+    private Unit m_hero;
+    private Unit m_enemy;
 
     void Awake()
     {
         if (heroClass == HeroClass.Warrior)
         {
-            hero = new Unit("Warrior", 100, 10, 16);
+            m_hero = new Unit("Warrior", 100, 10, 16);
         }
         else
         {
-            hero = new Unit("Mage", 130, 6, 12);
+            m_hero = new Unit("Mage", 130, 6, 12);
         }
 
         int enemyIndex = Random.Range(0, 3);
@@ -31,41 +31,41 @@ public class Arena : MonoBehaviour
         switch (enemyIndex)
         {
             case 0:
-                enemy = new Unit("Goblin", 50, 4, 8);
+                m_enemy = new Unit("Goblin", 50, 4, 8);
                 break;
 
             case 1:
-                enemy = new Unit("Orc", 80, 5, 10);
+                m_enemy = new Unit("Orc", 80, 5, 10);
                 break;
 
             case 2:
-                enemy = new Unit("Troll", 140, 8, 12);
+                m_enemy = new Unit("Troll", 140, 8, 12);
                 break;
         }
     }
 
     IEnumerator Start()
     {
-        heroText.text = hero.Name + "\nHP: " + hero.Health;
-        enemyText.text = enemy.Name + "\nHP: " + enemy.Health;
+        heroText.text = m_enemy.name + "\nHP: " + m_enemy.health;
+        enemyText.text = m_enemy.name + "\nHP: " + m_enemy.health;
         resultText.text = "";
 
-        Debug.Log("Бой: " + hero.Name + " против " + enemy.Name);
+        Debug.Log("Бой: " + m_enemy.name + " против " + m_enemy.name);
 
         yield return new WaitForSeconds(1f);
 
         for (int round = 1; round <= maxRounds; round++)
         {
             int heroDamage = Random.Range(
-                hero.MinDamage,
-                hero.MaxDamage + 1
+                m_enemy.minDamage,
+                m_enemy.maxDamage + 1
             );
 
             yield return StartCoroutine(
                 ShowAttack(
                     heroVisual,
                     enemyVisual,
-                    enemy,
+                    m_enemy,
                     enemyText,
                     heroDamage
                 )
@@ -73,50 +73,50 @@ public class Arena : MonoBehaviour
 
             Debug.Log(
                 "Раунд " + round +
-                ": " + hero.Name +
+                ": " + m_enemy.name +
                 " наносит " + heroDamage +
                 " урона. " +
-                enemy.Name + " HP: " + enemy.Health
+                m_enemy.name + " HP: " + m_enemy.health
             );
 
-            if (enemy.Health <= 0)
+            if (m_enemy.health <= 0)
             {
                 break;
             }
 
             int enemyDamage = Random.Range(
-                enemy.MinDamage,
-                enemy.MaxDamage + 1
+                m_enemy.minDamage,
+                m_enemy.maxDamage + 1
             );
 
             yield return StartCoroutine(
                 ShowAttack(
                     enemyVisual,
                     heroVisual,
-                    hero,
+                    m_enemy,
                     heroText,
                     enemyDamage
                 )
             );
 
             Debug.Log(
-                enemy.Name +
+                m_enemy.name +
                 " наносит " + enemyDamage +
                 " урона. " +
-                hero.Name + " HP: " + hero.Health
+                m_enemy.name + " HP: " + m_enemy.health
             );
 
-            if (hero.Health <= 0)
+            if (m_enemy.health <= 0)
             {
                 break;
             }
         }
 
-        if (enemy.Health <= 0)
+        if (m_enemy.health <= 0)
         {
             resultText.text = "WIN";
         }
-        else if (hero.Health <= 0)
+        else if (m_enemy.health <= 0)
         {
             resultText.text = "LOSS";
         }
@@ -125,7 +125,7 @@ public class Arena : MonoBehaviour
             resultText.text = "DRAW";
         }
     }
-    IEnumerator ShowAttack(
+    private IEnumerator ShowAttack(
         Transform attackerVisual,
         Transform targetVisual,
         Unit targetUnit,
@@ -159,9 +159,9 @@ public class Arena : MonoBehaviour
         targetUnit.TakeDamage(damage);
 
         targetText.text =
-            targetUnit.Name +
+            targetUnit.name +
             "\nHP: " +
-            targetUnit.Health;
+            targetUnit.health;
 
         yield return new WaitForSeconds(0.2f);
 
