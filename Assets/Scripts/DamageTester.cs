@@ -10,7 +10,7 @@ public class DamageTester : MonoBehaviour
     public ElementType targetElement;
     public float critChance;
 
-    IEnumerator Start()
+    private IEnumerator Start()
     {
         DamageCalculator calculator = new DamageCalculator();
         for (int i = 0; i < 3; i++)

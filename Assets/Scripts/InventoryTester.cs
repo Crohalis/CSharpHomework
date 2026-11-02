@@ -11,7 +11,7 @@ public class InventoryTester : MonoBehaviour
     public Transform sword;
     public Transform apple;
     
-    IEnumerator Start()
+    private IEnumerator Start()
     
     {
         Inventory inventory = new Inventory();
