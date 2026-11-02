@@ -153,8 +153,8 @@ MonoBehaviour:
   heroText: {fileID: 664935248}
   enemyText: {fileID: 1409454378}
   resultText: {fileID: 390304240}
-  heroClass: 1
-  maxRounds: 10
+  heroClass: 0
+  maxRounds: 15
 --- !u!4 &65357248
 Transform:
   m_ObjectHideFlags: 0

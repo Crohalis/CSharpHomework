@@ -152,8 +152,8 @@ MonoBehaviour:
   armor: 5
   attacker: {fileID: 1707843370}
   target: {fileID: 1581194470}
-  weaponElement: 1
-  targetElement: 2
+  weaponElement: 2
+  targetElement: 1
   critChance: 0.3
 --- !u!4 &307591855
 Transform:
