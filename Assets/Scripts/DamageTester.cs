@@ -10,7 +10,7 @@ public class DamageTester : MonoBehaviour
     public ElementType targetElement;
     public float critChance;
 
-    IEnumerator Start()
+    private IEnumerator Start()
     {
         DamageCalculator calculator = new DamageCalculator();
         for (int i = 0; i < 3; i++)
@@ -54,7 +54,7 @@ public class DamageTester : MonoBehaviour
             yield return StartCoroutine(ShowHit(finalDamage, isCritical));
         }
     }
-    IEnumerator ShowHit(int damage, bool isCritical)
+    private IEnumerator ShowHit(int damage, bool isCritical)
     {
             Vector3 attackerStartPosition = attacker.position;
             Vector3 targetStartScale = target.localScale;
@@ -64,22 +64,17 @@ public class DamageTester : MonoBehaviour
                 target.position,
                 0.65f
             );
-
-            float timer = 0f;
+            
             float moveDuration = 0.25f;
-
-            while (timer < moveDuration)
-            {
-                timer += Time.deltaTime;
-
-                attacker.position = Vector3.Lerp(
+            
+            yield return StartCoroutine(
+                AttackAnimation.Move(
+                    attacker,
                     attackerStartPosition,
                     hitPosition,
-                    timer / moveDuration
-                );
-
-                yield return null;
-            }
+                    moveDuration
+                )
+            );
 
             if (damage > 0)
             {
@@ -97,22 +92,14 @@ public class DamageTester : MonoBehaviour
 
             target.localScale = targetStartScale;
 
-            timer = 0f;
-
-            while (timer < moveDuration)
-            {
-                timer += Time.deltaTime;
-
-                attacker.position = Vector3.Lerp(
+            yield return StartCoroutine(
+                AttackAnimation.Move(
+                    attacker,
                     hitPosition,
                     attackerStartPosition,
-                    timer / moveDuration
-                );
-
-                yield return null;
-            }
-
-            attacker.position = attackerStartPosition;
+                    moveDuration
+                )
+            );
 
             yield return new WaitForSeconds(0.5f);
         }
