@@ -50,15 +50,15 @@ public class Arena : MonoBehaviour
         enemyText.text = m_enemy.name + "\nHP: " + m_enemy.health;
         resultText.text = "";
 
-        Debug.Log("Бой: " + m_enemy.name + " против " + m_enemy.name);
+        Debug.Log("Бой: " + m_hero.name + " против " + m_enemy.name);
 
         yield return new WaitForSeconds(1f);
 
         for (int round = 1; round <= maxRounds; round++)
         {
             int heroDamage = Random.Range(
-                m_enemy.minDamage,
-                m_enemy.maxDamage + 1
+                m_hero.minDamage,
+                m_hero.maxDamage + 1
             );
 
             yield return StartCoroutine(
@@ -73,7 +73,7 @@ public class Arena : MonoBehaviour
 
             Debug.Log(
                 "Раунд " + round +
-                ": " + m_enemy.name +
+                ": " + m_hero.name +
                 " наносит " + heroDamage +
                 " урона. " +
                 m_enemy.name + " HP: " + m_enemy.health
@@ -93,7 +93,7 @@ public class Arena : MonoBehaviour
                 ShowAttack(
                     enemyVisual,
                     heroVisual,
-                    m_enemy,
+                    m_hero,
                     heroText,
                     enemyDamage
                 )
@@ -103,10 +103,10 @@ public class Arena : MonoBehaviour
                 m_enemy.name +
                 " наносит " + enemyDamage +
                 " урона. " +
-                m_enemy.name + " HP: " + m_enemy.health
+                m_hero.name + " HP: " + m_hero.health
             );
 
-            if (m_enemy.health <= 0)
+            if (m_hero.health <= 0)
             {
                 break;
             }
@@ -116,7 +116,7 @@ public class Arena : MonoBehaviour
         {
             resultText.text = "WIN";
         }
-        else if (m_enemy.health <= 0)
+        else if (m_hero.health <= 0)
         {
             resultText.text = "LOSS";
         }
@@ -140,21 +140,19 @@ public class Arena : MonoBehaviour
             0.65f
         );
 
-        float timer = 0f;
+    
         float moveDuration = 0.25f;
 
-        while (timer < moveDuration)
-        {
-            timer += Time.deltaTime;
-
-            attackerVisual.position = Vector3.Lerp(
+        yield return StartCoroutine(
+            AttackAnimation.Move(
+                attackerVisual,
                 startPosition,
                 hitPosition,
-                timer / moveDuration
-            );
-
-            yield return null;
-        }
+                moveDuration
+            )
+        );
+        
+        
 
         targetUnit.TakeDamage(damage);
 
@@ -165,23 +163,16 @@ public class Arena : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
-        timer = 0f;
-
-        while (timer < moveDuration)
-        {
-            timer += Time.deltaTime;
-
-            attackerVisual.position = Vector3.Lerp(
-                hitPosition,
-                startPosition,
-                timer / moveDuration
-            );
-
-            yield return null;
-        }
-
-        attackerVisual.position = startPosition;
+        yield return StartCoroutine(
+            AttackAnimation.Move(
+            attackerVisual,
+            hitPosition,
+            startPosition,
+            moveDuration
+            )
+        );
 
         yield return new WaitForSeconds(0.5f);
     }
+    
 }

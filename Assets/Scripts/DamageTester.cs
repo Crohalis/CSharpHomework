@@ -64,22 +64,17 @@ public class DamageTester : MonoBehaviour
                 target.position,
                 0.65f
             );
-
-            float timer = 0f;
+            
             float moveDuration = 0.25f;
-
-            while (timer < moveDuration)
-            {
-                timer += Time.deltaTime;
-
-                attacker.position = Vector3.Lerp(
+            
+            yield return StartCoroutine(
+                AttackAnimation.Move(
+                    attacker,
                     attackerStartPosition,
                     hitPosition,
-                    timer / moveDuration
-                );
-
-                yield return null;
-            }
+                    moveDuration
+                )
+            );
 
             if (damage > 0)
             {
@@ -97,22 +92,14 @@ public class DamageTester : MonoBehaviour
 
             target.localScale = targetStartScale;
 
-            timer = 0f;
-
-            while (timer < moveDuration)
-            {
-                timer += Time.deltaTime;
-
-                attacker.position = Vector3.Lerp(
+            yield return StartCoroutine(
+                AttackAnimation.Move(
+                    attacker,
                     hitPosition,
                     attackerStartPosition,
-                    timer / moveDuration
-                );
-
-                yield return null;
-            }
-
-            attacker.position = attackerStartPosition;
+                    moveDuration
+                )
+            );
 
             yield return new WaitForSeconds(0.5f);
         }

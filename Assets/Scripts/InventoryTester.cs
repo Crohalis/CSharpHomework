@@ -15,6 +15,7 @@ public class InventoryTester : MonoBehaviour
     
     {
         Inventory inventory = new Inventory();
+        
         inventory.AddItem("Potion", 3);
         inventory.AddItem("Sword", 2);
         inventory.AddItem("Apple", 5);
@@ -32,7 +33,23 @@ public class InventoryTester : MonoBehaviour
         Debug.Log("Удаляем 1 Potion");
         inventory.RemoveItem("Potion", 1);
         UpdateTexts(inventory);
+        Debug.Log("Проверка удаления отсутствующего предмета");
+        inventory.RemoveItem("Bow", 1);
 
+        Debug.Log("Проверка удаления большего количества, чем есть");
+        inventory.RemoveItem("Sword", 100);
+
+        Debug.Log("Проверка переполнения инвентаря");
+
+        inventory.AddItem("Shield");
+        inventory.AddItem("Helmet");
+        inventory.AddItem("Ring");
+        inventory.AddItem("Key");
+        inventory.AddItem("Gem");
+        inventory.AddItem("Map");
+        inventory.AddItem("Book");
+
+        inventory.AddItem("OverflowItem");
         inventory.Print();
         
     }
@@ -46,5 +63,12 @@ public class InventoryTester : MonoBehaviour
         appleText.text = "Apple x" + appleCount;
 
         
+            inventory.Print();
+            inventory.AddItem("Potion", 0);
+            inventory.AddItem("Potion", -2);
+            
+            inventory.RemoveItem("Potion", 0);
+            inventory.RemoveItem("Potion", -2);
+            }
     }
-}
+   
